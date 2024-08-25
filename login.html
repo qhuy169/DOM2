@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #erName, #erPass, #erName2, #erPass2 {
+            display: none;
+            color: red;
+        }
+        .active {
+            display: block;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 0.875em;
+        }
+
+        #error {
+            display: none;
+            color: red;
+            font-size: 0.875em;
+        }
+
+        .active {
+            display: block;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .remember-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-container input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .remember-container label {
+            margin-top: 6px; 
+        }
+
+        /* Style for registration link */
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form name="frm">
+        <h2>Đăng nhập</h2>
+        <div>
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" onfocusout="checkUserName()">
+            <p id="erName">Tên đăng nhập không được bỏ trống!</p>
+            <p id="erName2">Tên đăng nhập không được chứa dấu cách!</p>
+        </div>
+        <div>
+            <label for="password">Mật khẩu:</label>
+            <input type="password" name="password" id="password">
+            <p id="erPass">Mật khẩu không được bỏ trống!</p>
+            <p id="erPass2">Mật khẩu không được chứa dấu cách!</p>
+        </div>
+        <div class="remember-container">
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember">Remember</label>
+        </div>
+        <div>
+            <input type="submit" name="submit" id="submit" value="Đăng nhập" onclick="login(event)">
+        </div>
+        <div class="register-link">
+            <p>Bạn chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
+        </div>
+    </form>
+    <script src="accounts.js"></script>
+    <script>
+        console.log(accounts)
+         function login(event) {
+            event.preventDefault();
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            if (validateCredentials(username, password)) {
+                alert("Đăng nhập thành công!");
+                setTimeout(function() {
+                    window.location.href = "index.html";
+                }, 1000);
+            } else {
+                alert("Tên đăng nhập hoặc mật khẩu không chính xác.");
+            }
+        }
+        function checkUserName() {
+            var username = document.getElementById("username").value;
+            if(username === ""){
+                var errname = document.getElementById("erName");
+                errname.style.display = "block";
+            } else {
+                var errname = document.getElementById("erName");
+                errname.style.display = "none";
+            }
+        }
+
+        document.getElementById("password").addEventListener("blur", function() {
+            var password = document.getElementById("password").value;
+            if(password === ""){
+                var errpass = document.getElementById("erPass");
+                errpass.style.display = "block";
+            } else {
+                var errpass = document.getElementById("erPass");
+                errpass.style.display = "none";
+            }
+        });
+
+        document.getElementById("username").addEventListener("input", function() {
+            var username = document.getElementById("username").value;
+            var regx = /\s/;
+            var errname2 = document.getElementById("erName2");
+            
+            if (username !== "" && regx.test(username)) {
+                errname2.style.display = "block";
+            } else {
+                errname2.style.display = "none";
+            }
+        });
+
+        document.getElementById("password").addEventListener("input", function() {
+            var password = document.getElementById("password").value;
+            var regx = /\s/;
+            var errpass2 = document.getElementById("erPass2");
+            
+            if (password !== "" && regx.test(password)) {
+                errpass2.style.display = "block";
+            } else {
+                errpass2.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
